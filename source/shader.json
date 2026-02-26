@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "url": "",
+    "shader_id": "",
+    "title": "Aurora Borealis Bliss",
+    "description": "glsl shader",
+    "num_passes": 1
+  },
+  "passes": [
+    {
+      "index": 0,
+      "type": "image",
+      "name": "Image",
+      "code": "#define time iTime\nmat2 mm2(in float a){float c=cos(a),s=sin(a);return mat2(c,s,-s,c);}mat2 m2=mat2(0.95534,0.29552,-0.29552,0.95534);float tri(in float x){return clamp(abs(fract(x)-.5),0.01,0.49);}vec2 tri2(in vec2 p){return vec2(tri(p.x)+tri(p.y),tri(p.y+tri(p.x)));}float ar;float n2(in vec2 p,float spd){float z=1.8;float z2=1.1;float rz=0.;p*=mm2(p.x*0.06);vec2 bp=p;mat2 rotMat=mm2(time*spd);for(float i=0.;i<4.;i++){vec2 dg=tri2(bp*1.85)*.75;dg*=rotMat;p-=dg/z2;bp*=1.3;z2*=.45;z*=.42;p*=1.21+(rz-1.0)*.02;rz+=tri(p.x+tri(p.y))*z;p*=-m2;}float rzScaled=rz*29.;return clamp(1./(rzScaled*sqrt(rzScaled)),0.,.55);}float h2(in vec2 n){return fract(sin(dot(n,vec2(12.9898,4.1414)))*43758.5453);}vec4 au(vec3 ro,vec3 rd){vec4 col=vec4(0);vec4 c1=vec4(0);float h0=h2(gl_FragCoord.xy);float d0=rd.y*2.+0.4;float d1=abs(d0)>0.001 ? 1.0/d0 : 0.0;for(float i=0.;i<35.;i++){float of=0.006*h0*smoothstep(0.,15.,i);float p1=i*sqrt(i);float pt=d1*((.8+p1*.002)-ro.y);pt-=of;vec3 b0=ro+pt*rd;vec2 p=b0.zx;float r0t=n2(p,0.06);vec4 c2=vec4(0,0,0,r0t);c2.rgb=(sin(2.-vec3(-10,-.7,1.3)+i*0.03)*0.5+0.5)*r0t;c1=mix(c1,c2,.5);col+=c1*exp2(-i*0.065-2.5)*smoothstep(0.7,5.,i);}col*=(clamp(abs(rd.y)*17.+.4,0.,1.));return col*1.8;}vec3 h3(vec3 q){uvec3 p=uvec3(ivec3(q));p=p*uvec3(374761393U,1103515245U,668265263U)+p.zxy+p.yzx;p=p.yzx*(p.zxy^(p>>3U));return vec3(p^(p>>16U))*(1.0/vec3(0xffffffffU));}vec3 st(in vec3 p){vec3 c=vec3(0.);float s0=sqrt(iResolution.x/400.)*400.;float s1=.15*s0;for(float i=0.;i<3.;i++){vec3 q=fract(p*s1)-0.5;vec3 id=floor(p*s1);vec2 rn=h3(id).xy;float c2=1.-smoothstep(0.,0.7,length(q));c2*=step(rn.x,.0005+i*i*0.001);c+=c2*(mix(vec3(1.0,0.49,0.1),vec3(0.75,0.9,1.),rn.y)*0.1+0.9);p*=1.3;}return c*c*.8;}vec3 bg0(in vec3 rd){float sd=dot(normalize(vec3(-0.3,-0.6,0.9)),rd)*0.5+0.5;sd=pow(sd,5.);vec3 col=mix(vec3(0.1,0.1,0.2),vec3(0.8,0.035,0.15),sd);return col*0.89;}void mainImage(out vec4 fc,in vec2 fg){ar=iResolution.x/iResolution.y;vec2 q=fg.xy/iResolution.xy;q.y*=ar;vec2 p=q-0.5;vec3 ro=vec3(0,0,-6.7);vec3 rd=vec3(p,1.3);vec2 m0=q+1.4;float t1=sin(time*0.05);rd.xz*=mm2(m0.x+t1*0.2);rd=normalize(rd);float f0=smoothstep(0.,0.09,abs(rd.y))*0.1+0.9;vec3 col=vec3(0.0);if(rd.y>-0.0){vec4 aur=smoothstep(0.,1.5,au(ro,rd))*f0;col=bg0(rd)*f0+(1.-f0)*vec3(.4);col+=st(rd);col=col*(1.-aur.a)+aur.rgb;}else{vec3 rr=rd;rr.y=abs(rr.y);col=bg0(rr)*f0*0.6;vec4 aur=smoothstep(0.0,2.5,au(ro,rr));col+=st(rr)*0.1;col=col*(1.-aur.a)+aur.rgb;vec3 ps=ro;if(abs(rr.y)>0.001){ps=ro+((0.5-ro.y)/rr.y)*rr;}float n0=n2(ps.xz*vec2(.5,.7),0.);col+=mix(vec3(0.2,0.25,0.5)*0.08,vec3(0.3,0.3,0.5)*0.7,n0*0.4);}fc=vec4(col,1.);}"
+    }
+  ],
+  "screenshots": [],
+  "performance": {},
+  "input_textures": [],
+  "pass_textures": []
+}

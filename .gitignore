@@ -1,0 +1,13 @@
+*.exe
+*.scr
+*.zip
+myapp
+source/myapp
+*.app
+AuroraBorealisBliss.app
+source/AuroraBorealisBliss.app
+*.syso
+*.dll
+*.log
+dist/
+build/
